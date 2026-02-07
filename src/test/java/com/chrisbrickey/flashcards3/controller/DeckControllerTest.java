@@ -10,8 +10,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -53,24 +56,21 @@ public class DeckControllerTest {
     }
 
     @Test
-    public void shuffleCardsAfterIdsAssigned() throws IOException {
-        DeckController controller = new DeckController();
-        DeckResponse response = controller.getDeck("static/csv/sample.csv");
-        List<CardResponse> result = response.getCards();
-        Long start = 0L;
-        boolean ordered = true;
+    public void shuffleCardsAfterIdsAssigned() {
+      // setup
+      List<List<String>> sample_content = Arrays.asList(
+        Arrays.asList("a cat", "un gato", "spanish"),
+        Arrays.asList("a cat", "un chat", "french"),
+        Arrays.asList("Index into a String.", "someString.substring(0,1)", "java"),
+        Arrays.asList("Create a new array of ints with a specified size of 4 elements.", "int[] myArray = new int[4]", "java")
+      );
 
-        for (CardResponse cardResponse : result) {
-            Long resultID = cardResponse.getId();
-            if ((start + 1L) == resultID) {
-                start ++;
-            } else {
-                ordered = false;
-                break;
-            }
-        }
+      // exercise DeckResponse directly
+      DeckResponse response = new DeckResponse(sample_content, new Random(42L));
+      List<CardResponse> cards = response.getCards();
 
-        assertFalse(ordered);
+      // First card in CSV has ID 1; after shuffling it should not still be first
+      assertNotEquals(1L, cards.get(0).getId());
     }
 
     @Test

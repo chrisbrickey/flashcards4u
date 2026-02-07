@@ -5,10 +5,10 @@ import java.util.*;
 public class DeckResponse {
     private List<CardResponse> cards;
 
-    public DeckResponse(List<List<String>> cardData) {
+    public DeckResponse(List<List<String>> cardData, Random randomSeed) {
         // Set cards before shuffling so that the CardResponse.id reflects the original order of the source content.
         setCards(cardData);
-        shuffleCards();
+        shuffleCards(randomSeed);
     }
 
     public List<CardResponse> getCards() { return cards; }
@@ -34,8 +34,8 @@ public class DeckResponse {
         this.cards = deck;
     }
 
-    private void shuffleCards() {
-        Collections.shuffle(cards);
+    private void shuffleCards(Random randomSeed) {
+        Collections.shuffle(cards, randomSeed);
     }
 
     public static void sortCards(List<CardResponse> cards) {
