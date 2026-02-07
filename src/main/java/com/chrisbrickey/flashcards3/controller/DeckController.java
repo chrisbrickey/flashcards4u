@@ -10,6 +10,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.lang.*;
 
 @RestController
@@ -45,7 +46,7 @@ public class DeckController {
         }
 
         // construct response object
-        DeckResponse deck = new DeckResponse(content);
+        DeckResponse deck = new DeckResponse(content, new Random());
         return deck;
     }
 
