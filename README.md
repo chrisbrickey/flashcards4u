@@ -3,10 +3,12 @@
 It loads content into digital flashcards for on-the-go studying. Click the card to toggle between front and back.
 Click the 'next' button to view the subsequent card.
 
-As of 2024, this app is using content for learning French, but the app is content-agnostic. 
-It can be used for any subject. 
+As of 2026, this app is using content for learning French, but the app is content-agnostic. 
+It can be used for any subject.
 
-![Screenshot](https://res.cloudinary.com/dckkkjkuz/image/upload/v1658001860/portfolio/flashcards4u-screenshot.png)
+<p align="center">
+  <img src="./docs/images/flashcards4u-two-screens-compressed.jpg" height="300" style="margin-right: 10px;" />
+</p>
 
 ## New Features
 * Integration with Generative AI service:
