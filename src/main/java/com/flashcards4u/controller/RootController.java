@@ -1,4 +1,4 @@
-package com.chrisbrickey.flashcards3.controller;
+package com.flashcards4u.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

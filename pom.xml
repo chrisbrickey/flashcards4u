@@ -8,10 +8,10 @@
 		<version>3.4.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.chrisbrickey</groupId>
-	<artifactId>flashcards3</artifactId>
-	<version>3.4.1-SNAPSHOT</version>
-	<name>flashcards3</name>
+	<groupId>com.flashcards4u</groupId>
+	<artifactId>flashcards4u</artifactId>
+	<version>4.0.0-SNAPSHOT</version>
+	<name>flashcards4u</name>
 	<description>dynamic webapp for learning with flashcards</description>
 	<properties>
 		<java.version>21</java.version>

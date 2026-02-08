@@ -1,4 +1,4 @@
-package com.chrisbrickey.flashcards3.controller;
+package com.flashcards4u.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import org.junit.jupiter.api.Test;

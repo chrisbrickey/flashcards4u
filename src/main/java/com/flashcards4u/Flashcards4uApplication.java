@@ -1,13 +1,13 @@
-package com.chrisbrickey.flashcards3;
+package com.flashcards4u;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Flashcards3Application {
+public class Flashcards4uApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Flashcards3Application.class, args);
+		SpringApplication.run(Flashcards4uApplication.class, args);
 	}
 
 }

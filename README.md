@@ -12,11 +12,11 @@ It can be used for any subject.
 
 ## Architecture
 ```
-flashcards3/                             # project root
+flashcards4u/                            # project root
 ├── pom.xml                              # configuration and dependencies
 ├── mvnw                                 # Maven wrapper
 │   
-├── src/main/java/.../flashcards3/       # java package
+├── src/main/java/.../flashcards4u/      # java package
 │   │
 │   ├── controller/                      # HTTP concerns                         
 │   │   ├── DeckController.java          # REST endpoints
@@ -53,8 +53,11 @@ flashcards3/                             # project root
     ```
     ./mvnw test
   
-    // print out logs
+    # print out logs
     ./mvnw test -X 
+  
+    # build from scratch and execute tests
+    ./mvnw clean test
     ```
 
 ### Troubleshooting
