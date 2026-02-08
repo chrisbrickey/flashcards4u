@@ -26,7 +26,13 @@ It can be used for any subject.
 * Navigate to `http://localhost:8080/` in browser
 
 ### Testing
-* Run test suite: `./mvnw test`
+* Run test suite: 
+    ```
+    ./mvnw test
+  
+    // print out logs
+    ./mvnw test -X 
+    ```
 
 ### Troubleshooting
 * See [springboot4 repo](https://github.com/chrisbrickey/springboot4) for sample code and notes
