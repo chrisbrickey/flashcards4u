@@ -1,0 +1,3 @@
+question,answer,category
+Given a regular array` create a NumPy array of training examples.,training_examples = numpy.array(original_array),machine-learning
+Create a NumPy array from scratch.,x = numpy.array([1.0` 2.5` -3]),machine-learning

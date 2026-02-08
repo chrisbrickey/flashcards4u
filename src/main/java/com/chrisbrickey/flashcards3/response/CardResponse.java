@@ -1,5 +1,7 @@
 package com.chrisbrickey.flashcards3.response;
 
+import com.chrisbrickey.flashcards3.model.Card;
+
 public class CardResponse {
     private long id;
     private String question;
@@ -24,4 +26,8 @@ public class CardResponse {
 
     public String getCategory() { return category; }
     public void setCategory(String category) { this.category = category; }
+
+    public static CardResponse fromCard(Card card) {
+        return new CardResponse(card.getId(), card.getQuestion(), card.getAnswer(), card.getCategory());
+    }
 }
