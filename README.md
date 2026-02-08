@@ -1,4 +1,4 @@
-# Flashcards3
+# Flashcards4u
 [www.flashcards4u.com](http://www.flashcards4u.com) is a test-driven, Java Spring Boot webapp. 
 It loads content into digital flashcards for on-the-go studying. Click the card to toggle between front and back.
 Click the 'next' button to view the subsequent card.
@@ -10,9 +10,32 @@ It can be used for any subject.
   <img src="./docs/images/flashcards4u-two-screens-compressed.jpg" height="300" style="margin-right: 10px;" />
 </p>
 
-## New Features
-* Integration with Generative AI service:
-  I am currently working on a feature to allow the user to gain additional context about the topic of a flashcard without leaving the app.
+## Architecture
+```
+flashcards3/                             # project root
+├── pom.xml                              # configuration and dependencies
+├── mvnw                                 # Maven wrapper
+│   
+├── src/main/java/.../flashcards3/       # java package
+│   │
+│   ├── controller/                      # HTTP concerns                         
+│   │   ├── DeckController.java          # REST endpoints
+│   │   └── RootController.java          # serves index.html to frontend
+│   │
+│   ├── model/                           # domain objects (internal representation of data)
+│   ├── response/                        # data transfer objects (DTOs) for JSON serialization
+│   └── service/                         # business logic
+│
+├── src/main/resources/static/           # static resources
+│   ├── csv/                             # flashcard content; analogous to a database
+│   ├── index.html                       # frontend entry point
+│   └── source.js                        # frontend logic (AJAX, card rendering, animations)
+│
+└── src/test/                            # test suite
+```
+
+## Future Development
+* Integration with Generative AI service to allow the user to gain additional context about the topic of a flashcard without leaving the app.
 
 ## Development
 
@@ -26,7 +49,13 @@ It can be used for any subject.
 * Navigate to `http://localhost:8080/` in browser
 
 ### Testing
-* Run test suite: `./mvnw test`
+* Run test suite: 
+    ```
+    ./mvnw test
+  
+    // print out logs
+    ./mvnw test -X 
+    ```
 
 ### Troubleshooting
 * See [springboot4 repo](https://github.com/chrisbrickey/springboot4) for sample code and notes
@@ -38,14 +67,14 @@ It can be used for any subject.
 #### Why use CSV files when I could use a database? 
 
 I'm a lifelong learner, taking on a new subject every few years. Flashcards (physical and digital) are a powerful tool for internalizing concepts and accelerating learning.
-I built this app for myself and have used it for numerous subjects. 
+I built this app to learn Spring Boot framework and also to use it for studying numerous subjects including French and new programming languages. 
 
 For me, the creation of the content of a flashcard is just as impactful as the review. It forces me to write out the logic, which crystallizes the learning. 
 And, as I learn more about a domain, the flashcards must evolve to capture new understanding of connections and contexts that were not apparent at first.
 
 So the requirement of easy editing across hundreds or thousands of human-readable items is paramount for the primary use case of this app. CSV meets this need well while also providing sufficient structure to the data. 
 
-Traditional databases are more reliable. No doubt. But (for me) the ease of add and edit to a CSV file outweighs the advantages of a more traditional database for this app. 
+Traditional databases are more scalable, but - for me - the ease of add and edit to a CSV file outweighs the advantages of a separate database for this app. 
 
 #### Parsing Particularities
 

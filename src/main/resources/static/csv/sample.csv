@@ -1,5 +1,0 @@
-question,answer,category
-a cat,un gato,spanish
-a cat,un chat,french
-Index into a String.,someString.substring(0`1),java
-Create a new array of ints with a specified size of 4 elements.,int[] myArray = new int[4],java

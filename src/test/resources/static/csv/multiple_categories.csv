@@ -1,0 +1,6 @@
+question,answer,category
+a cat,un chat,french
+a cat,un gato,spanish
+Create a list comprehension for even squared values.,[x**2 for x in range(10) if x % 2 == 0],python
+Initialize an array of ints with size of 4 elements.,int[] a = new int[4],java
+Initialize a map of strings to ints,m := map[string]int{'a':1},golang
