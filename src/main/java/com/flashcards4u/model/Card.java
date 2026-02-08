@@ -1,4 +1,4 @@
-package com.chrisbrickey.flashcards3.model;
+package com.flashcards4u.model;
 
 public class Card implements Comparable<Card> {
     private long id;

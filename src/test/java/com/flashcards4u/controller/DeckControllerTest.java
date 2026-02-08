@@ -1,7 +1,7 @@
-package com.chrisbrickey.flashcards3.controller;
+package com.flashcards4u.controller;
 
-import com.chrisbrickey.flashcards3.model.Card;
-import com.chrisbrickey.flashcards3.service.DeckService;
+import com.flashcards4u.model.Card;
+import com.flashcards4u.service.DeckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;

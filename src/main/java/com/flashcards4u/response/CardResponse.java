@@ -1,6 +1,6 @@
-package com.chrisbrickey.flashcards3.response;
+package com.flashcards4u.response;
 
-import com.chrisbrickey.flashcards3.model.Card;
+import com.flashcards4u.model.Card;
 
 public class CardResponse {
     private long id;

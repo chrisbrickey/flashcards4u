@@ -1,6 +1,6 @@
-package com.chrisbrickey.flashcards3.service;
+package com.flashcards4u.service;
 
-import com.chrisbrickey.flashcards3.model.Card;
+import com.flashcards4u.model.Card;
 import org.springframework.stereotype.Service;
 
 import java.io.*;

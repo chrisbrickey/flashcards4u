@@ -1,9 +1,9 @@
-package com.chrisbrickey.flashcards3;
+package com.flashcards4u;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import com.chrisbrickey.flashcards3.model.Card;
-import com.chrisbrickey.flashcards3.service.DeckService;
+import com.flashcards4u.model.Card;
+import com.flashcards4u.service.DeckService;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

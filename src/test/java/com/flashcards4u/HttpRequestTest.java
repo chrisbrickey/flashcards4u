@@ -1,4 +1,4 @@
-package com.chrisbrickey.flashcards3;
+package com.flashcards4u;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

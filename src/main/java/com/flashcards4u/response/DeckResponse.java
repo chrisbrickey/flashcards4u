@@ -1,4 +1,4 @@
-package com.chrisbrickey.flashcards3.response;
+package com.flashcards4u.response;
 
 import java.util.List;
 
