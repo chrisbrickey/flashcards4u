@@ -1,11 +1,11 @@
-# Flashcards4u
-[www.flashcards4u.com](http://www.flashcards4u.com) is a test-driven, Java Spring Boot webapp. 
-It loads content into digital flashcards for on-the-go studying. Click the card to toggle between front and back.
-Click the 'next' button to view the subsequent card.
+# flashcards4u
+[www.flashcards4u.com](http://www.flashcards4u.com) is a test-driven, Java Spring Boot app. 
+It can load content on any subject into digital flashcards for studying convenience. 
 
-As of 2026, this app is using content for learning French, but the app is content-agnostic. 
-It can be used for any subject.
+I built flashcards4u to learn the Spring Boot framework, but it was also instrumental in achieving lifetime
+certification in French at B2 level. As of 2026, the hosted app serves my english-to-french content.
 
+Click the card to toggle between front and back. Click the 'next' button to view the subsequent card.
 <p align="center">
   <img src="./docs/images/flashcards4u-two-screens-compressed.jpg" height="300" style="margin-right: 10px;" />
 </p>
@@ -66,22 +66,40 @@ flashcards4u/                            # project root
 ## Content Sources
 
 ### CSV Files
+Content is served from CSV files that anyone can type from scratch or generate using LLM agents.
+The structure is extremely constrained: three required fields, no conversion of values to types.
 
-#### Why use CSV files when I could use a database? 
+Adding the following CSV file to `src/main/resources/static/csv/` 
+and updating the filepath on `source.js` would serve three flashcards to the frontend.
 
-I'm a lifelong learner, taking on a new subject every few years. Flashcards (physical and digital) are a powerful tool for internalizing concepts and accelerating learning.
-I built this app to learn Spring Boot framework and also to use it for studying numerous subjects including French and new programming languages. 
+```csv
+question,answer,category
+a cat,un chat,nouns
+demanding,exigeant(e),adjectives
+thirty,trente,numbers
+```
 
-For me, the creation of the content of a flashcard is just as impactful as the review. It forces me to write out the logic, which crystallizes the learning. 
-And, as I learn more about a domain, the flashcards must evolve to capture new understanding of connections and contexts that were not apparent at first.
+#### Why use CSV files instead of a database? 
 
-So the requirement of easy editing across hundreds or thousands of human-readable items is paramount for the primary use case of this app. CSV meets this need well while also providing sufficient structure to the data. 
+TLDR: eases CRUD operations across hundreds or thousands of human-readable items
 
-Traditional databases are more scalable, but - for me - the ease of add and edit to a CSV file outweighs the advantages of a separate database for this app. 
+For me, the creation of a flashcard is just as impactful as the review. 
+It forces me to write out the logic, which crystallizes the learning.
+And the flashcards should evolve to capture new understanding as more is learned about a domain.
 
-#### Parsing Particularities
+So the desire for a digital solution with easy add/edit capability drove the development of this app.
+CSV meets this need well while providing sufficient structure to the data. 
+It's easy for any human user to update, regardless of technical background. 
+The use of a separate database would inhibit all CRUD operations by forcing the user to make changes through a controlled interface.
 
-This app parses CSV files on the server and displays the content in a browser as HTML. Both CSV and HTML have different character string constraints. 
+### Character restrictions and transformations
 
-This app performs the following mutations (from CSV to HTML) to handle the gap in constraints:
-* backtick -> comma
+CSV and HTML have different character constraints. So some things that could be stored in a CSV file cannot be served well via HTML and vice-versa.
+
+These characters are not allowed in the CSV files to ensure readability in the browser.
+* `<`
+* `>`
+* `&`
+
+This app performs the following mutation to permit the display of commas in the browser, which are reserved as separators in CSV files.
+* backtick -> comma 
