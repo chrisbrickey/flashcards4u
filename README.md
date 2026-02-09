@@ -10,7 +10,7 @@ Click the card to toggle between front and back. Click the 'next' button to view
   <img src="./docs/images/flashcards4u-two-screens-compressed.jpg" height="300" style="margin-right: 10px;" />
 </p>
 
-## Architecture
+## Project Structure
 ```
 flashcards4u/                            # project root
 ├── pom.xml                              # configuration and dependencies
@@ -34,9 +34,6 @@ flashcards4u/                            # project root
 └── src/test/                            # test suite
 ```
 
-## Future Development
-* Integration with Generative AI service to allow the user to gain additional context about the topic of a flashcard without leaving the app.
-
 ## Development
 
 ### Dependencies
@@ -44,34 +41,57 @@ flashcards4u/                            # project root
 * Spring Boot 3.4.0
 * Maven 3
 
+Validate your environment:
+```
+java -version    # must be 21+
+
+./mvnw -version  # verify Maven wrapper works
+```
+
+### Build
+```
+./mvnw clean package
+
+java -jar target/flashcards4u-4.0.0-SNAPSHOT.jar
+```
+
+### Configuration
+The app uses Spring Boot defaults. 
+To customize settings, edit `src/main/resources/application.properties`. For example, add `server.port=9090`.
+
 ### Run
 * From command line: `./mvnw spring-boot:run`
 * Navigate to `http://localhost:8080/` in browser
 
 ### Testing
-* Run test suite: 
     ```
     ./mvnw test
-  
+
+    # run a single test class
+    ./mvnw test -Dtest=DeckServiceTest
+
     # print out logs
-    ./mvnw test -X 
-  
+    ./mvnw test -X
+
     # build from scratch and execute tests
     ./mvnw clean test
     ```
 
 ### Troubleshooting
-* See [springboot4 repo](https://github.com/chrisbrickey/springboot4) for sample code and notes
+* **`./mvnw: Permission denied`:** The Maven wrapper script needs execute permission. Run `chmod +x mvnw`.
+* **CSV file not found at runtime:** The filepath passed to the `/v1/deck` endpoint is resolved from the classpath root. Ensure the CSV file is in `src/main/resources/static/csv/` and the filepath matches (e.g., `static/csv/flashcard_content.csv`).
+* **CSV parsing errors:** Verify the CSV has the required header (`question,answer,category`) and that no field values contain `<`, `>`, or `&`.
 
-## Content Sources
+## Content Source
 
-### CSV Files
 Content is served from CSV files that anyone can type from scratch or generate using LLM agents.
 The structure is extremely constrained: three required fields, no conversion of values to types.
 
-Adding the following CSV file to `src/main/resources/static/csv/` 
-and updating the filepath on `source.js` would serve three flashcards to the frontend.
+### To change the content source
+- Add the following CSV file to `src/main/resources/static/csv/`.
+- Update the filepath on `source.js`.
 
+The below example would serve three flashcards to the frontend.
 ```csv
 question,answer,category
 a cat,un chat,nouns
@@ -79,7 +99,38 @@ demanding,exigeant(e),adjectives
 thirty,trente,numbers
 ```
 
-#### Why use CSV files instead of a database? 
+### API
+
+The backend exposes an endpoint for declaring the content source:
+-**`GET /v1/deck?filepath=<path>`**
+
+It returns a shuffled deck of flashcards parsed from the provided CSV file.
+
+Example response:
+```json
+{
+  "cards": [
+    { "id": 1, "question": "a cat", "answer": "un chat", "category": "nouns" },
+    { "id": 2, "question": "demanding", "answer": "exigeant(e)", "category": "adjectives" },
+    { "id": 3, "question": "thirty", "answer": "trente", "category": "numbers" }]
+   }
+```
+
+- Returns `400 Bad Request` if `filepath` is missing.
+
+### Character restrictions and transformations
+
+CSV and HTML have different character constraints. So some things that could be stored in a CSV file cannot be served well via HTML and vice-versa.
+
+These characters are not allowed in the CSV files to ensure readability in the browser.
+* `<`
+* `>`
+* `&`
+
+This app performs the following mutation to permit the display of commas in the browser, which are reserved as separators in CSV files.
+* backtick -> comma
+
+### Why use CSV files instead of a database? 
 
 TLDR: eases CRUD operations across hundreds or thousands of human-readable items
 
@@ -92,14 +143,5 @@ CSV meets this need well while providing sufficient structure to the data.
 It's easy for any human user to update, regardless of technical background. 
 The use of a separate database would inhibit all CRUD operations by forcing the user to make changes through a controlled interface.
 
-### Character restrictions and transformations
-
-CSV and HTML have different character constraints. So some things that could be stored in a CSV file cannot be served well via HTML and vice-versa.
-
-These characters are not allowed in the CSV files to ensure readability in the browser.
-* `<`
-* `>`
-* `&`
-
-This app performs the following mutation to permit the display of commas in the browser, which are reserved as separators in CSV files.
-* backtick -> comma 
+## Future Development
+* Integration with Generative AI service to allow the user to gain additional context about the topic of a flashcard without leaving the app.
