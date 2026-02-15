@@ -88,8 +88,9 @@ Content is served from CSV files that anyone can type from scratch or generate u
 The structure is extremely constrained: three required fields, no conversion of values to types.
 
 ### To change the content source
-- Add the following CSV file to `src/main/resources/static/csv/`.
-- Update the filepath on `source.js`.
+- Add a CSV file with the following categories to `src/main/resources/static/csv/`.
+- Declare a new key-value pair in `DECK_PATHS` that routes to the csv file.
+- Update the url on `source.js` to use the new key.
 
 The below example would serve three flashcards to the frontend.
 ```csv
@@ -101,10 +102,12 @@ thirty,trente,numbers
 
 ### API
 
-The backend exposes an endpoint for declaring the content source:
--**`GET /v1/deck?filepath=<path>`**
+The backend exposes an endpoint for retrieving a deck (the content source):
+- **`GET /v1/decks/{deckName}`**
 
-It returns a shuffled deck of flashcards parsed from the provided CSV file.
+For example: GET /v1/decks/english-to-french.
+
+It returns a shuffled deck of flashcards parsed from the CSV file associated with the `deckName`.
 
 Example response:
 ```json
@@ -116,7 +119,7 @@ Example response:
    }
 ```
 
-- Returns `400 Bad Request` if `filepath` is missing.
+- Returns `400` error with informative message if the url does not route to a key in the `DECK_PATH`.
 
 ### Character restrictions and transformations
 
@@ -145,3 +148,4 @@ The use of a separate database would inhibit all CRUD operations by forcing the 
 
 ## Future Development
 * Integration with Generative AI service to allow the user to gain additional context about the topic of a flashcard without leaving the app.
+* Add UI filters for category and content source. 
