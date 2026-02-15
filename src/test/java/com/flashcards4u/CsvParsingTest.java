@@ -2,6 +2,8 @@ package com.flashcards4u;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import com.flashcards4u.exception.CsvFileNotFoundException;
+import com.flashcards4u.exception.CsvParsingException;
 import com.flashcards4u.model.Card;
 import com.flashcards4u.service.DeckService;
 import org.junit.jupiter.api.Test;
@@ -45,8 +47,9 @@ public class CsvParsingTest {
             DeckService service = new DeckService();
             List<Card> cards = service.buildDeck(filepath, new Random());
             cards.size();
-        } catch (Exception e){
-          return false;
+        } catch (CsvFileNotFoundException | CsvParsingException e) {
+            logger.warn("Failed to parse CSV file: {}", filepath, e);
+            return false;
         }
 
         return true;

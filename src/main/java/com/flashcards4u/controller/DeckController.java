@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -28,7 +27,7 @@ public class DeckController {
     }
 
     @GetMapping("/v1/decks/{deckName}")
-    public DeckResponse getDeck(@PathVariable String deckName) throws IOException {
+    public DeckResponse getDeck(@PathVariable String deckName) {
         String filepath = DECK_PATHS.get(deckName);
         if (filepath == null) {
             throw new DeckNotFoundException(deckName);

@@ -128,7 +128,7 @@ CSV and HTML have different character constraints. So some things that could be 
 These characters are not allowed in the CSV files to ensure readability in the browser.
 * `<`
 * `>`
-* `&`
+* `"`
 
 This app performs the following mutation to permit the display of commas in the browser, which are reserved as separators in CSV files.
 * backtick -> comma

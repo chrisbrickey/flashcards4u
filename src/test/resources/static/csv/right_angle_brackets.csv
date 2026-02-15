@@ -1,0 +1,2 @@
+question,answer,category
+For an ArrayList of Integers` count the items greater than 15.,someArrayList.stream().filter(e -> e.compareTo(Integer(15)) == -1).count();,java
