@@ -78,21 +78,21 @@ public class DeckControllerTest {
 
     @Test
     public void succeedsForKnownDeck() throws Exception {
-      String validPath = "/v1/decks/english-to-french";
-      List<Card> mockCards = List.of(new Card(1L, "demanding", "exigeant(e)", "french"));
-      when(deckService.buildDeck(anyString(), any(Random.class))).thenReturn(mockCards);
+        String validPath = "/v1/decks/english-to-french";
+        List<Card> mockCards = List.of(new Card(1L, "demanding", "exigeant(e)", "french"));
+        when(deckService.buildDeck(anyString(), any(Random.class))).thenReturn(mockCards);
 
-      this.mockMvc.perform(MockMvcRequestBuilders.get(validPath)
-          .accept(MediaType.APPLICATION_JSON))
-          .andExpect(MockMvcResultMatchers.status().isOk());
+        this.mockMvc.perform(MockMvcRequestBuilders.get(validPath)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     public void returnNotFoundForUnknownDeck() throws Exception {
-      String deckName = "nonexistent";
-      String path= "/v1/decks/" + deckName;
+        String deckName = "nonexistent";
+        String path = "/v1/decks/" + deckName;
 
-      this.mockMvc.perform(MockMvcRequestBuilders.get(path)
+        this.mockMvc.perform(MockMvcRequestBuilders.get(path)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andExpect(result -> assertInstanceOf(DeckNotFoundException.class, result.getResolvedException()))
