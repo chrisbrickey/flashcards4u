@@ -1,5 +1,7 @@
 package com.flashcards4u.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.flashcards4u.model.Card;
 
 public class CardResponse {
@@ -8,7 +10,12 @@ public class CardResponse {
     private String answer;
     private String category;
 
-    public CardResponse(long id, String question, String answer, String category) {
+    @JsonCreator
+    public CardResponse(
+            @JsonProperty("id") long id,
+            @JsonProperty("question") String question,
+            @JsonProperty("answer") String answer,
+            @JsonProperty("category") String category) {
         setId(id);
         setQuestion(question);
         setAnswer(answer);
