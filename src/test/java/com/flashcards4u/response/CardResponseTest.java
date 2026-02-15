@@ -1,5 +1,6 @@
 package com.flashcards4u.response;
 
+import com.flashcards4u.model.Card;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -42,5 +43,16 @@ public class CardResponseTest {
         CardResponse card = new CardResponse(1L, "q", "a", "c");
         card.setCategory("new category");
         assertEquals("new category", card.getCategory());
+    }
+
+    @Test
+    public void fromCardMapsAllFieldsCorrectly() {
+        Card card = new Card(5L, "a cat", "un chat", "french");
+        CardResponse response = CardResponse.fromCard(card);
+
+        assertEquals(5L, response.getId());
+        assertEquals("a cat", response.getQuestion());
+        assertEquals("un chat", response.getAnswer());
+        assertEquals("french", response.getCategory());
     }
 }
