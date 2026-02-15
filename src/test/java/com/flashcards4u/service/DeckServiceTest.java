@@ -3,6 +3,7 @@ package com.flashcards4u.service;
 import com.flashcards4u.model.Card;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -59,22 +60,21 @@ public class DeckServiceTest {
         assertEquals("french", cards.get(0).getCategory());
     }
 
+    @Test
+    public void buildDeckReplacesBacktickWithComma() throws Exception {
+        List<Card> cards = service.buildDeck("static/csv/backticks.csv", new Random(42L));
+        Collections.sort(cards);
 
-  @Test
-  public void buildDeckReplacesBacktickWithComma() throws Exception {
-    List<Card> cards = service.buildDeck("static/csv/backticks.csv", new Random(42L));
-    Collections.sort(cards);
+        assertEquals(2, cards.size());
 
-    assertEquals(2, cards.size());
+        var firstCard = cards.get(0);
+        var expectedQuestion  = "Given a regular array, create a NumPy array of training examples.";
+        assertEquals(expectedQuestion, firstCard.getQuestion());
 
-    var firstCard = cards.get(0);
-    var expectedQuestion  = "Given a regular array, create a NumPy array of training examples.";
-    assertEquals(expectedQuestion, firstCard.getQuestion());
-
-    var secondCard = cards.get(1);
-    var expectedAnswer = "x = numpy.array([1.0, 2.5, -3])";
-    assertEquals(expectedAnswer, secondCard.getAnswer());
-  }
+        var secondCard = cards.get(1);
+        var expectedAnswer = "x = numpy.array([1.0, 2.5, -3])";
+        assertEquals(expectedAnswer, secondCard.getAnswer());
+    }
 
     @Test
     public void buildDeckWithNoCardsSucceeds() throws Exception {
@@ -83,8 +83,33 @@ public class DeckServiceTest {
         assertEquals(0, cards.size());
     }
 
-  @Test
-  public void buildDeckWithNoHeadersFails() {
-    assertThrows(Exception.class, () -> service.buildDeck("static/csv/no_headers.csv", new Random(42L)));
-  }
+    @Test
+    public void buildDeckWithNoHeadersFails() {
+        String noHeaderFile = "no_headers.csv";
+        String path = "static/csv/" + noHeaderFile;
+
+        IOException exception = assertThrows(IOException.class,
+                () -> service.buildDeck(path, new Random(42L)));
+        assertTrue(exception.getMessage().contains(noHeaderFile));
+    }
+
+    @Test
+    public void buildDeckThrowsExceptionForMissingFile() {
+        String nonexistantFile = "nonexistent.csv";
+        String path = "static/csv/" + nonexistantFile;
+
+        NullPointerException exception = assertThrows(NullPointerException.class,
+                () -> service.buildDeck(path, new Random(42L)));
+    }
+
+    @Test
+    public void buildDeckProducesDifferentOrdersWithDifferentSeeds() throws Exception {
+        List<Card> cards1 = service.buildDeck("static/csv/multiple_categories.csv", new Random(42L));
+        List<Card> cards2 = service.buildDeck("static/csv/multiple_categories.csv", new Random(99L));
+
+        List<Long> ids1 = cards1.stream().map(Card::getId).toList();
+        List<Long> ids2 = cards2.stream().map(Card::getId).toList();
+
+        assertNotEquals(ids1, ids2, "Different seeds should produce different order of cards.");
+    }
 }

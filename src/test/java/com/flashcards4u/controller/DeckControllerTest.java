@@ -35,22 +35,56 @@ public class DeckControllerTest {
     private DeckService deckService;
 
     @Test
-    public void returnDeckResponseWithFlashcardContent() throws Exception {
+    public void returnCorrectType() throws Exception {
         List<Card> mockCards = List.of(new Card(1L, "demanding", "exigeant(e)", "french"));
         when(deckService.buildDeck(anyString(), any(Random.class))).thenReturn(mockCards);
 
+        // verify JSON is returned
         MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/decks/english-to-french")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.cards[0].question").value("demanding"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.cards[0].answer").value("exigeant(e)"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.cards[0].category").value("french"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.cards[0].id").value(1))
-                .andReturn();
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+            .andReturn();
 
+        // verify DeckResponse is returned
         ObjectMapper mapper = new ObjectMapper();
         DeckResponse deckResponse = mapper.readValue(result.getResponse().getContentAsString(), DeckResponse.class);
         assertInstanceOf(DeckResponse.class, deckResponse);
+    }
+
+    @Test
+    public void returnCardContent() throws Exception {
+        List<Card> mockCards = List.of(new Card(1L, "demanding", "exigeant(e)", "french"));
+        when(deckService.buildDeck(anyString(), any(Random.class))).thenReturn(mockCards);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/decks/english-to-french")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.cards[0].question").value("demanding"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.cards[0].answer").value("exigeant(e)"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.cards[0].category").value("french"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.cards[0].id").value(1));
+    }
+
+    @Test
+    public void returnCorrectNumberOfCards() throws Exception {
+        List<Card> mockCards = List.of(
+                new Card(1L, "demanding", "exigeant(e)", "french"),
+                new Card(2L, "a cat", "un chat", "french"));
+        when(deckService.buildDeck(anyString(), any(Random.class))).thenReturn(mockCards);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/decks/english-to-french")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.cards.length()").value(2));
+    }
+
+    @Test
+    public void succeedsForKnownDeck() throws Exception {
+      String validPath = "/v1/decks/english-to-french";
+      List<Card> mockCards = List.of(new Card(1L, "demanding", "exigeant(e)", "french"));
+      when(deckService.buildDeck(anyString(), any(Random.class))).thenReturn(mockCards);
+
+      this.mockMvc.perform(MockMvcRequestBuilders.get(validPath)
+          .accept(MediaType.APPLICATION_JSON))
+          .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test

@@ -14,9 +14,9 @@ public class RootControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    public void htmlIncludesCustomMessage() throws Exception {
+    public void rootRoutesToPrimaryView() throws Exception {
         this.mockMvc.perform(get("/"))
             .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.view().name("index.html"));
+            .andExpect(MockMvcResultMatchers.forwardedUrl("index.html"));
     }
 }
