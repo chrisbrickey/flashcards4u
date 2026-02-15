@@ -33,13 +33,13 @@ public class IntegrationTest {
 
     @Test
     public void contextLoadsForSmokeTest() throws Exception {
-      assertThat(controller).isNotNull();
+        assertThat(controller).isNotNull();
     }
 
     @Test
     public void rootSpinsUpServerOnRandomPortAndDisplaysContent() throws Exception {
-      assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/", String.class))
-        .contains("flashcards4u");
+        assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/", String.class))
+            .contains("flashcards4u");
     }
 
     @Test
